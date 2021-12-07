@@ -27,7 +27,7 @@ export function calculateResult(inputList, targetValue, calculateType) {
       }
     }
     // 不高于（交通）
-    if (value <= targetValue) {
+    if (value > 0 && value <= targetValue) {
       let list = [];
       tempPath.forEach((p, index) => {
         if (p === 1) {

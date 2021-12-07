@@ -20,17 +20,17 @@ const Home = () => {
     const inputList = Object.values(restInput).filter(v => !!v && parseFloat(v) >= 0).map(k => parseFloat(k));
 
     if (inputList.length) {
-      const resultList = calculateResult(inputList, targetValue, calculateType);
-
-      console.log(resultList);
-      console.log(calculateType);
-
+      const resultList = calculator(inputList, targetValue, calculateType);
+      console.log('===================================================');
       console.log('发票金额：' + inputList);
       console.log('目标额度：' + targetValue + '元');
-
-      resultList.forEach(v => {
-        console.log('最接近目标值的组合为 ' + JSON.stringify(v.list) + ' ,合计' + v.total + '元');
-      });
+      if (resultList.length) {
+        resultList.forEach(v => {
+          console.log('最接近目标值的组合为 ' + JSON.stringify(v.list) + ' ,合计' + v.total + '元');
+        });
+      } else {
+        console.log('无结果');
+      }
 
       setInputListForPrint(inputList);
       setTargetValueForPrint(targetValue);
@@ -62,8 +62,8 @@ const Home = () => {
       <Text
         style={{ margin: 10 }}
       >
-        <Tooltip title="1207更新：1.修复未完全筛掉相同输出结果的问题，增加对输入负数校验处理；2.调整输出界面换行，微调标题样式；3.增加计算“不低于”目标额度的功能">
-          E票M - 发票助手 V 0.9.1
+        <Tooltip title="1207更新：1.修复未完全筛掉相同输出结果的问题，增加对输入负数校验处理；2.调整输出界面换行，微调标题样式；3.增加计算“不低于”目标额度的功能；4.优化控制台输出，优化输出无结果时的显示">
+          E票M - 发票助手 V 0.9.2
         </Tooltip>
       </Text>
       <div style={{ display: 'flex' }}>
@@ -104,7 +104,7 @@ const Home = () => {
             </Button>
           </Form.Item>
         </Form>
-        {resultListForPrint?.length ? (
+        {inputListForPrint?.length ? (
           <div style={{ padding: '4%', width: '50%' }}>
             <Title level={4}>发票金额：</Title>
             <Title level={5}>{JSON.stringify(inputListForPrint, null, 2)}</Title>
@@ -116,7 +116,7 @@ const Home = () => {
             {resultListForPrint.map((v) =>
               (<Title level={5}>{JSON.stringify(v.list, null, 2)}&nbsp;&nbsp;&nbsp;&nbsp;合计 {v.total} 元</Title>)
             )}
-
+            {!resultListForPrint.length && (<Title level={5}>无结果</Title>)}
           </div>
         ) : null}
       </div>
