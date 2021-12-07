@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { calculateResult } from './util';
-import { Button, Form, Input, Tooltip, Typography } from 'antd';
+import { Button, Form, Input, Radio, Tooltip, Typography } from 'antd';
 
 const { Title, Text } = Typography;
 
@@ -11,16 +11,19 @@ const Home = () => {
   const [resultListForPrint, setResultListForPrint] = useState([]);
 
 
-  const calculator = useCallback((inputList, targetValue) => {
-    return calculateResult(inputList, targetValue);
+  const calculator = useCallback((inputList, targetValue, calculateType) => {
+    return calculateResult(inputList, targetValue, calculateType);
   }, []);
 
   const submit = (values) => {
-    const { targetValue, ...restInput } = values;
-    const inputList = Object.values(restInput).filter(v => !!v).map(k => parseFloat(k));
+    const { targetValue, calculateType, ...restInput } = values;
+    const inputList = Object.values(restInput).filter(v => !!v && parseFloat(v) >= 0).map(k => parseFloat(k));
 
     if (inputList.length) {
-      const resultList = calculator(inputList, targetValue);
+      const resultList = calculateResult(inputList, targetValue, calculateType);
+
+      console.log(resultList);
+      console.log(calculateType);
 
       console.log('发票金额：' + inputList);
       console.log('目标额度：' + targetValue + '元');
@@ -32,7 +35,7 @@ const Home = () => {
       setInputListForPrint(inputList);
       setTargetValueForPrint(targetValue);
       setResultListForPrint(resultList);
-    }else{
+    } else {
       setInputListForPrint([]);
       setTargetValueForPrint(0);
       setResultListForPrint([]);
@@ -59,8 +62,8 @@ const Home = () => {
       <Text
         style={{ margin: 10 }}
       >
-        <Tooltip title="1206更新：1.修复输入不支持小数的问题，修复重复计算导致输出相同结果的问题，略微增强对输入数字的校验；2.调整输入界面至三列，微调标题样式；3.除控制台外，增加界面右侧输出显示">
-          发票助手-不高于（交通费）V 0.9.丐
+        <Tooltip title="1207更新：1.修复未完全筛掉相同输出结果的问题，增加对输入负数校验处理；2.调整输出界面换行，微调标题样式；3.增加计算“不低于”目标额度的功能">
+          E票M - 发票助手 V 0.9.1
         </Tooltip>
       </Text>
       <div style={{ display: 'flex' }}>
@@ -71,12 +74,24 @@ const Home = () => {
           }}
           onFinish={submit}
           autoComplete="off"
-          style={{ margin: '4%', width: '50%' }}
+          style={{ padding: '4%', width: '50%' }}
         >
-          <Title level={3}>
+          <Title level={4}>
+            计算方式
+          </Title>
+          <Form.Item
+            initialValue="noMoreThan"
+            name="calculateType"
+          >
+            <Radio.Group buttonStyle="solid">
+              <Radio.Button value="noMoreThan">不超过（交通）</Radio.Button>
+              <Radio.Button value="noLessThan">不低于（其他）</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+          <Title level={4}>
             目标额度
           </Title>
-          <Form.Item name="targetValue">
+          <Form.Item name="targetValue" style={{ display: 'inline-block', width: '60%' }}>
             <Input />
           </Form.Item>
           <Title level={4}>
@@ -90,14 +105,18 @@ const Home = () => {
           </Form.Item>
         </Form>
         {resultListForPrint?.length ? (
-          <div style={{ margin: '4%', width: '50%' }}>
-            <Title level={4}>发票金额：{JSON.stringify(inputListForPrint, null, 2)}</Title>
+          <div style={{ padding: '4%', width: '50%' }}>
+            <Title level={4}>发票金额：</Title>
+            <Title level={5}>{JSON.stringify(inputListForPrint, null, 2)}</Title>
             <br />
-            <Title level={4}>目标额度：{targetValueForPrint} 元</Title>
+            <Title level={4}>目标额度：</Title>
+            <Title level={5}>{targetValueForPrint} 元</Title>
             <br />
+            <Title level={4}>最接近目标值的组合为：</Title>
             {resultListForPrint.map((v) =>
-              (<Title level={4}>最接近目标值的组合为：{JSON.stringify(v.list, null, 2)}，合计 {v.total} 元</Title>)
+              (<Title level={5}>{JSON.stringify(v.list, null, 2)}&nbsp;&nbsp;&nbsp;&nbsp;合计 {v.total} 元</Title>)
             )}
+
           </div>
         ) : null}
       </div>
