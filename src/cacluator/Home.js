@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { calculateResult } from './util';
-import { Button, Form, Input, Radio, Tooltip, Typography } from 'antd';
+import { Button, Form, Input, Popover, Radio, Tag, Tooltip, Typography } from 'antd';
+import qrcode from './qr_code.jpg';
 
 const { Title, Text } = Typography;
 
@@ -62,7 +63,7 @@ const Home = () => {
       <Text
         style={{ margin: 10 }}
       >
-        <Tooltip title="1207更新：1.修复未完全筛掉相同输出结果的问题，增加对输入负数校验处理；2.调整输出界面换行，微调标题样式；3.增加计算“不低于”目标额度的功能；4.优化控制台输出，优化输出无结果时的显示">
+        <Tooltip title="1210更新：右下角增加问题反馈渠道">
           E票M - 发票助手 V 0.9.2
         </Tooltip>
       </Text>
@@ -119,6 +120,21 @@ const Home = () => {
             {!resultListForPrint.length && (<Title level={5}>无结果</Title>)}
           </div>
         ) : null}
+      </div>
+      <div style={{
+        position: 'fixed',
+        right: 40,
+        bottom: 40,
+        zIndex: 9999,
+        display: 'flex',
+        cursor: 'pointer'
+      }}>
+        <Popover
+          content={<img height="300" width="300" src={qrcode} alt="给钱啥都好说" />}
+          trigger="click"
+        >
+          <Tag color="#108ee9">→ 点赞/吐槽/需求/BUG ←</Tag>
+        </Popover>
       </div>
     </>
   );
