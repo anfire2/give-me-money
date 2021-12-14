@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { calculateResult } from './util';
 import { Button, Form, Input, Popover, Radio, Tag, Tooltip, Typography } from 'antd';
-import qrcode from './qr_code.jpg';
+import qrcode from './qr_code.webp';
 
 const { Title, Text } = Typography;
 
@@ -130,7 +130,7 @@ const Home = () => {
         cursor: 'pointer'
       }}>
         <Popover
-          content={<img height="300" width="300" src={qrcode} alt="给钱啥都好说" />}
+          content={<img height="270" width="270" src={qrcode} alt="给钱啥都好说" />}
           trigger="click"
         >
           <Tag color="#108ee9">→ 点赞/吐槽/需求/BUG ←</Tag>

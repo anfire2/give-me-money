@@ -23,7 +23,7 @@ export function calculateResult(inputList, targetValue, calculateType) {
     let value = 0;
     for (let i = 0; i < depth; i++) {
       if (tempPath[i] === 1) {
-        value += inputList[i];
+        value = (value * 1000 + inputList[i] * 1000) / 1000;
       }
     }
     // 不高于（交通）
@@ -49,7 +49,7 @@ export function calculateResult(inputList, targetValue, calculateType) {
     let value = 0;
     for (let i = 0; i < depth; i++) {
       if (tempPath[i] === 1) {
-        value += inputList[i];
+        value = (value * 1000 + inputList[i] * 1000) / 1000;
       }
     }
     // 不低于（租房）
