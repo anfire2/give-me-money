@@ -63,8 +63,8 @@ const Home = () => {
       <Text
         style={{ margin: 10 }}
       >
-        <Tooltip title="1210更新：右下角增加问题反馈渠道">
-          E票M - 发票助手 V 0.9.3
+        <Tooltip title="1214更新：暴力解决三位小数以内的精度问题；反馈渠道图片使用webp格式，调整显示大小">
+          E票M - 发票助手 V 0.9.4
         </Tooltip>
       </Text>
       <div style={{ display: 'flex' }}>
