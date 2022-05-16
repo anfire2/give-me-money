@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { calculateResult } from './util';
-import { Button, Form, Input, Popover, Radio, Tag, Tooltip, Typography } from 'antd';
+import { Button, Form, Input, Popover, Radio, Space, Tag, Tooltip, Typography } from 'antd';
 import qrcode from './qr_code.webp';
 
 const { Title, Text } = Typography;
@@ -63,8 +63,8 @@ const Home = () => {
       <Text
         style={{ margin: 10 }}
       >
-        <Tooltip title="1214更新：暴力解决三位小数以内的精度问题；反馈渠道图片使用webp格式，调整显示大小">
-          E票M - 发票助手 V 0.9.4
+        <Tooltip title="20220516更新：优化计算方式的描述，增加计算说明">
+          E票M - 发票助手 V 0.9.5
         </Tooltip>
       </Text>
       <div style={{ display: 'flex' }}>
@@ -75,7 +75,7 @@ const Home = () => {
           }}
           onFinish={submit}
           autoComplete="off"
-          style={{ padding: '4%', width: '50%' }}
+          style={{ padding: '2% 4%', width: '50%' }}
         >
           <Title level={4}>
             计算方式
@@ -85,8 +85,8 @@ const Home = () => {
             name="calculateType"
           >
             <Radio.Group buttonStyle="solid">
-              <Radio.Button value="noMoreThan">不超过（交通）</Radio.Button>
-              <Radio.Button value="noLessThan">不低于（其他）</Radio.Button>
+              <Radio.Button value="noMoreThan">相加不超过</Radio.Button>
+              <Radio.Button value="noLessThan">相加不低于</Radio.Button>
             </Radio.Group>
           </Form.Item>
           <Title level={4}>
@@ -106,7 +106,7 @@ const Home = () => {
           </Form.Item>
         </Form>
         {inputListForPrint?.length ? (
-          <div style={{ padding: '4%', width: '50%' }}>
+          <div style={{ padding: '2% 4%', width: '50%' }}>
             <Title level={4}>发票金额：</Title>
             <Title level={5}>{JSON.stringify(inputListForPrint, null, 2)}</Title>
             <br />
@@ -114,21 +114,29 @@ const Home = () => {
             <Title level={5}>{targetValueForPrint} 元</Title>
             <br />
             <Title level={4}>最接近目标值的组合为：</Title>
-            {resultListForPrint.map((v) =>
-              (<Title level={5}>{JSON.stringify(v.list, null, 2)}&nbsp;&nbsp;&nbsp;&nbsp;合计 {v.total} 元</Title>)
-            )}
+            {resultListForPrint.map((v) => (
+              <Title level={5}>{JSON.stringify(v.list, null, 2)}&nbsp;&nbsp;&nbsp;&nbsp;合计 {v.total} 元</Title>
+            ))}
             {!resultListForPrint.length && (<Title level={5}>无结果</Title>)}
           </div>
         ) : null}
       </div>
-      <div style={{
-        position: 'fixed',
-        right: 40,
-        bottom: 40,
-        zIndex: 9999,
-        display: 'flex',
-        cursor: 'pointer'
-      }}>
+      <div style={{ paddingLeft: '4%' }}>
+        <Space direction="vertical">
+          <span>注：</span>
+          <span>
+            “费用额度” 报销要求发票金额必须与报销金额完全一致，选择【相加不超过】
+          </span>
+          <span>
+            “额度券” 等其他报销只需发票金额超过目标额度即可，选择【相加不低于】
+          </span>
+        </Space>
+      </div>
+      <div
+        style={{
+          position: 'fixed', right: 40, bottom: 40, zIndex: 9999, display: 'flex', cursor: 'pointer'
+        }}
+      >
         <Popover
           content={<img height="270" width="270" src={qrcode} alt="给钱啥都好说" />}
           trigger="click"
