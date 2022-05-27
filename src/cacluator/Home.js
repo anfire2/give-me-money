@@ -63,8 +63,8 @@ const Home = () => {
       <Text
         style={{ margin: 10 }}
       >
-        <Tooltip title="20220516更新：优化计算方式的描述，增加计算说明">
-          E票M - 发票助手 V 0.9.5
+        <Tooltip title="20220527：修复计算说明的内容写反了的问题">
+          E票M - 发票助手 V 0.9.5.fix
         </Tooltip>
       </Text>
       <div style={{ display: 'flex' }}>
