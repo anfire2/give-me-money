@@ -26,7 +26,7 @@ export function calculateResult(inputList, targetValue, calculateType) {
         value = (value * 1000 + inputList[i] * 1000) / 1000;
       }
     }
-    // 不高于（交通）
+    // 不高于
     if (value > 0 && value <= targetValue) {
       let list = [];
       tempPath.forEach((p, index) => {
@@ -52,7 +52,7 @@ export function calculateResult(inputList, targetValue, calculateType) {
         value = (value * 1000 + inputList[i] * 1000) / 1000;
       }
     }
-    // 不低于（租房）
+    // 不低于
     if (value >= targetValue) {
       let list = [];
       tempPath.forEach((p, index) => {

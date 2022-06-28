@@ -51,7 +51,7 @@ const Home = () => {
           name={'value_' + i}
           style={{ display: 'inline-block', width: '33%' }}
         >
-          <Input />
+          <Input allowClear/>
         </Form.Item>
       );
     }
@@ -63,8 +63,8 @@ const Home = () => {
       <Text
         style={{ margin: 10 }}
       >
-        <Tooltip title="20220527：修复计算说明的内容写反了的问题">
-          E票M - 发票助手 V 0.9.5.fix
+        <Tooltip title="20220628：1.发票金额输入框支持单独清空；2.经人肉测试报销发票金额超过费用额度时也会被退回，因此报销方式不再对“额度券”和“费用额度”进行区分建议">
+          E票M - 发票助手 V 0.9.6
         </Tooltip>
       </Text>
       <div style={{ display: 'flex' }}>
@@ -113,7 +113,7 @@ const Home = () => {
             <Title level={4}>目标额度：</Title>
             <Title level={5}>{targetValueForPrint} 元</Title>
             <br />
-            <Title level={4}>最接近目标值的组合为：</Title>
+            <Title level={4}>最接近目标额度的组合为：</Title>
             {resultListForPrint.map((v) => (
               <Title level={5}>{JSON.stringify(v.list, null, 2)}&nbsp;&nbsp;&nbsp;&nbsp;合计 {v.total} 元</Title>
             ))}
@@ -125,10 +125,10 @@ const Home = () => {
         <Space direction="vertical">
           <span>注：</span>
           <span>
-            “额度券” 报销要求发票金额必须与报销金额完全一致，选择【相加不超过】
+            选择【相加不超过】或【相加不低于】时，均将计算出最接近目标额度的组合
           </span>
           <span>
-            “费用额度” 等其他报销只需发票金额超过目标额度即可，选择【相加不低于】
+            报销要求发票金额必须与报销金额【完全一致】，否则可能会被退回
           </span>
         </Space>
       </div>
