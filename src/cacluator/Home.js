@@ -133,7 +133,7 @@ const Home = () => {
           <Tag color="#108ee9">→ 点赞/吐槽/需求/BUG ←</Tag>
         </Popover>
         <Title level={5}>
-          Eccom Money
+          Give Me Money
         </Title>
       </div>
     </>
