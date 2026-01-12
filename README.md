@@ -1,15 +1,15 @@
-# E票M
+# Give Me Money
 
 ```sh
-npm install -g yarn
+npm install -g bun
 # 安装依赖包
-yarn
+bun install
 # 启动
-yarn start
+bun start
 # 打包
-yarn build
+bun build
 # 发布
-yarn deploy
+bun deploy
 ```
 
 ### Updates
@@ -19,6 +19,7 @@ yarn deploy
 *V 0.9.8*
 
 - 更名为Give Me Money
+- 添加 bun 支持
 
 **2023.04.19**
 
