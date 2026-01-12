@@ -7,9 +7,9 @@ bun install
 # 启动
 bun start
 # 打包
-bun build
+bun run build
 # 发布
-bun deploy
+bun run deploy
 ```
 
 ### Updates
